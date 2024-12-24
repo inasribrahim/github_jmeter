@@ -61,7 +61,9 @@ jobs:
           $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos.jmx \
             -l $GITHUB_WORKSPACE/test_report/pos.jtl \
             -e -o $GITHUB_WORKSPACE/test_report \
-            -p $GITHUB_WORKSPACE/test.properties
+            -p $GITHUB_WORKSPACE/test.properties \
+            -Jjmeter.reportgenerator.apdex_satisfied_threshold=500 \
+            -Jjmeter.reportgenerator.apdex_tolerated_threshold=1500
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v3

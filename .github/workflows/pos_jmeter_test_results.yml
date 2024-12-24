@@ -29,14 +29,12 @@ jobs:
           unzip apache-jmeter-5.6.3.zip
           mv apache-jmeter-5.6.3 $GITHUB_WORKSPACE/apache-jmeter
 
-      - name: Run JMeter Test with Hardcoded Values
+      - name: Run JMeter Test with Properties File
         run: |
-          echo "Running JMeter script pos.jmx with hardcoded values"
+          echo "Running JMeter script pos.jmx with properties file"
           $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos.jmx \
             -l $GITHUB_WORKSPACE/test_report/pos.jtl \
-            -Juser_number=10 \
-            -Jramp_time=10 \
-            -Jmax_time=1 \
+            -p $GITHUB_WORKSPACE/test.properties \
             -e -o $GITHUB_WORKSPACE/test_report/pos
 
       - name: Verify Test Report Files

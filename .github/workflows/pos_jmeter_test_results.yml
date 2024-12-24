@@ -35,8 +35,6 @@ jobs:
         run: |
           echo "Workspace contents:"
           ls -al
-          echo "pos_jmeter contents:"
-          ls -al pos_jmeter
 
       # Create directory for test reports
       - name: Create Test Report Directory

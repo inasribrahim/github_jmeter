@@ -49,7 +49,7 @@ jobs:
       - name: Run JMeter Test
         run: |
           echo "Running JMeter script pos.jmx from pos_jmeter directory"
-          $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos_jmeter/pos.jmx \
+          $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos.jmx \
             -l $GITHUB_WORKSPACE/test_report/pos.jtl \
             -Juser_number=${{ inputs.user_number }} \
             -Jramp_time=${{ inputs.ramp_time }} \

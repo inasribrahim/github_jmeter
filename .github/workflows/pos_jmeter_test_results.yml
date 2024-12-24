@@ -38,7 +38,7 @@ jobs:
         run: ls -al $GITHUB_WORKSPACE
 
       - name: Create Test Report Directory
-        run: mkdir -p $GITHUB_WORKSPACE/pos_jmeter/test_report
+        run: mkdir -p $GITHUB_WORKSPACE/test_report
 
       - name: Install JMeter
         run: |
@@ -50,15 +50,15 @@ jobs:
         run: |
           echo "Running JMeter script pos.jmx from pos_jmeter directory"
           $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos_jmeter/pos.jmx \
-            -l $GITHUB_WORKSPACE/pos_jmeter/test_report/pos.jtl \
+            -l $GITHUB_WORKSPACE/test_report/pos.jtl \
             -Juser_number=${{ inputs.user_number }} \
             -Jramp_time=${{ inputs.ramp_time }} \
             -Jmax_time=${{ inputs.max_time }} \
-            -e -o $GITHUB_WORKSPACE/pos_jmeter/test_report/pos
+            -e -o $GITHUB_WORKSPACE/test_report/pos
 
       - name: Verify Test Report Files
         run: |
-          ls -al $GITHUB_WORKSPACE/pos_jmeter/test_report
+          ls -al $GITHUB_WORKSPACE/test_report
 
       - name: Upload JMeter Test Results
         uses: actions/upload-artifact@v3

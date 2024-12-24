@@ -5,19 +5,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      user_number:
-        description: "Number of Concurrent Users"
-        required: true
-        default: "10"
-      ramp_time:
-        description: "Ramp-up Time (in seconds)"
-        required: true
-        default: "10"
-      max_time:
-        description: "Maximum Test Iterations"
-        required: true
-        default: "1"
 
 jobs:
   run-jmeter-tests:
@@ -42,14 +29,14 @@ jobs:
           unzip apache-jmeter-5.6.3.zip
           mv apache-jmeter-5.6.3 $GITHUB_WORKSPACE/apache-jmeter
 
-      - name: Run JMeter Test
+      - name: Run JMeter Test with Hardcoded Values
         run: |
-          echo "Running JMeter script pos.jmx"
+          echo "Running JMeter script pos.jmx with hardcoded values"
           $GITHUB_WORKSPACE/apache-jmeter/bin/jmeter -n -t $GITHUB_WORKSPACE/pos.jmx \
             -l $GITHUB_WORKSPACE/test_report/pos.jtl \
-            -Juser_number=${{ inputs.user_number }} \
-            -Jramp_time=${{ inputs.ramp_time }} \
-            -Jmax_time=${{ inputs.max_time }} \
+            -Juser_number=10 \
+            -Jramp_time=10 \
+            -Jmax_time=1 \
             -e -o $GITHUB_WORKSPACE/test_report/pos
 
       - name: Verify Test Report Files
@@ -57,7 +44,7 @@ jobs:
           echo "Generated Test Report:"
           ls -al $GITHUB_WORKSPACE/test_report
 
-      - name: Upload JMeter Test Results
+      - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: pos_jmeter_test_results

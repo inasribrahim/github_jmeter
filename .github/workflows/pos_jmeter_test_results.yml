@@ -24,21 +24,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out the repository to access files
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Verify the repository files
-      - name: Verify Repository Files
+      - name: Debug Workspace
         run: |
-          echo "Listing repository files:"
+          echo "Listing files in workspace:"
           ls -al
 
-      # Create a directory for test reports
       - name: Create Test Report Directory
         run: mkdir -p $GITHUB_WORKSPACE/test_report
 
-      # Install JMeter
       - name: Install JMeter
         run: |
           echo "Installing Apache JMeter..."
@@ -46,7 +42,6 @@ jobs:
           unzip apache-jmeter-5.6.3.zip
           mv apache-jmeter-5.6.3 $GITHUB_WORKSPACE/apache-jmeter
 
-      # Run JMeter test with specified parameters
       - name: Run JMeter Test
         run: |
           echo "Running JMeter script pos.jmx"
@@ -57,13 +52,11 @@ jobs:
             -Jmax_time=${{ inputs.max_time }} \
             -e -o $GITHUB_WORKSPACE/test_report/pos
 
-      # Verify test report files
       - name: Verify Test Report Files
         run: |
           echo "Generated Test Report:"
           ls -al $GITHUB_WORKSPACE/test_report
 
-      # Upload test results as artifacts
       - name: Upload JMeter Test Results
         uses: actions/upload-artifact@v3
         with:
